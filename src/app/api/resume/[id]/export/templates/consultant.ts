@@ -7,6 +7,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
@@ -61,6 +62,14 @@ function buildConsultantSectionContent(section: Section): string {
     return `<div class="space-y-1.5">${((c as LanguagesContent).items || []).map((it: any) =>
       `<div><span class="text-sm font-bold" style="color:${GRAY_700}">${esc(it.language)}</span><span class="text-sm text-gray-500"> — ${esc(it.proficiency)}</span></div>`
     ).join('')}</div>`;
+  }
+
+  if (section.type === 'github') {
+    return `<div class="space-y-3">${((c as GitHubContent).items || []).map((it: any) => `<div>
+      <div class="flex items-baseline justify-between"><span class="text-sm font-bold" style="color:${GRAY_700}">${esc(it.name)}</span><span class="text-xs text-gray-400">⭐ ${it.stars?.toLocaleString() ?? 0}</span></div>
+      ${it.language ? `<span class="text-xs text-gray-400">${esc(it.language)}</span>` : ''}
+      ${it.description ? `<p class="mt-1 text-sm text-gray-600">${esc(it.description)}</p>` : ''}
+    </div>`).join('')}</div>`;
   }
 
   if (section.type === 'custom') {

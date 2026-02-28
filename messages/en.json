@@ -143,6 +143,7 @@
       "projects": "Projects",
       "certifications": "Certifications",
       "languages": "Languages",
+      "github": "GitHub Projects",
       "custom": "Custom Section"
     },
     "fields": {
@@ -168,6 +169,12 @@
       "technologies": "Technologies",
       "language": "Language",
       "proficiency": "Proficiency",
+      "repoUrl": "Repository URL",
+      "stars": "Stars",
+      "repoName": "Repository Name",
+      "primaryLanguage": "Primary Language",
+      "fetchRepo": "Fetch Repo Info",
+      "fetchingRepo": "Fetching...",
       "addItem": "Add Item",
       "removeItem": "Remove Item",
       "clear": "Clear",

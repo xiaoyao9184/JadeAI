@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent, GitHubContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 export function ModernTemplate({ resume }: { resume: Resume }) {
@@ -167,6 +167,24 @@ function ModernSectionContent({ section }: { section: any }) {
                 {item.highlights.map((h: string, i: number) => <li key={i} className="text-sm text-zinc-600">{h}</li>)}
               </ul>
             )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-4">
+        {items.map((item: any) => (
+          <div key={item.id} className="border-l-2 pl-4" style={{ borderColor: '#e94560' }}>
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-sm font-semibold text-zinc-800">{item.name}</h3>
+              <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-500">{item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs text-zinc-500">{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm text-zinc-600">{item.description}</p>}
           </div>
         ))}
       </div>

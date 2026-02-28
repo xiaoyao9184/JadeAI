@@ -6,6 +6,7 @@ import type {
   ProjectsContent,
   CertificationsContent,
   LanguagesContent,
+  GitHubContent,
   CustomContent,
 } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
@@ -51,6 +52,13 @@ function buildExecutiveSectionContent(section: Section): string {
     return `<div class="flex flex-wrap gap-2">${((c as LanguagesContent).items || []).map((it: any) =>
       `<span class="rounded border px-2.5 py-1 text-xs font-medium" style="border-color:${EMERALD};color:${CHARCOAL}">${esc(it.language)}<span class="text-zinc-500"> — ${esc(it.proficiency)}</span></span>`
     ).join('')}</div>`;
+  }
+  if (section.type === 'github') {
+    return `<div class="space-y-3">${((c as GitHubContent).items || []).map((it: any) => `<div>
+      <div class="flex items-baseline justify-between"><span class="text-sm font-bold" style="color:${CHARCOAL}">${esc(it.name)}</span><span class="text-xs text-zinc-400">\u2B50 ${it.stars?.toLocaleString() ?? 0}</span></div>
+      ${it.language ? `<span class="text-xs text-zinc-400">${esc(it.language)}</span>` : ''}
+      ${it.description ? `<p class="mt-1 text-sm text-zinc-600">${esc(it.description)}</p>` : ''}
+    </div>`).join('')}</div>`;
   }
   if (section.type === 'custom') {
     return `<div class="space-y-3">${((c as CustomContent).items || []).map((it: any) => `<div>

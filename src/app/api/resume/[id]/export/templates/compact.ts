@@ -7,6 +7,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
@@ -33,6 +34,13 @@ function buildCompactRightContent(section: Section): string {
       ${it.description ? `<p class="mt-0.5 text-xs text-zinc-600">${esc(it.description)}</p>` : ''}
       ${it.technologies?.length ? `<p class="mt-0.5 text-[10px] text-zinc-400">Tech: ${esc(it.technologies.join(', '))}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-0.5 list-disc pl-3.5">${buildHighlights(it.highlights, 'text-xs text-zinc-600')}</ul>` : ''}
+    </div>`).join('')}</div>`;
+  }
+  if (section.type === 'github') {
+    return `<div class="space-y-2">${((c as GitHubContent).items || []).map((it: any) => `<div>
+      <div class="flex items-baseline justify-between"><span class="text-xs font-bold text-zinc-800">${esc(it.name)}</span><span class="text-[10px] text-zinc-400">\u2B50 ${it.stars?.toLocaleString() ?? 0}</span></div>
+      ${it.language ? `<span class="text-[10px] text-zinc-500">${esc(it.language)}</span>` : ''}
+      ${it.description ? `<p class="mt-0.5 text-xs text-zinc-600">${esc(it.description)}</p>` : ''}
     </div>`).join('')}</div>`;
   }
   if (c.items) {

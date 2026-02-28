@@ -11,6 +11,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
@@ -222,6 +223,24 @@ function MagazineSectionContent({ section }: { section: any }) {
           <div key={item.id} className="flex items-baseline gap-2">
             <span className="text-sm font-bold" style={{ color: PRIMARY }}>{item.language}</span>
             <span className="text-xs uppercase tracking-wider" style={{ color: ACCENT }}>{item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="border-l-2 pl-4" style={{ borderColor: ACCENT }}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color: PRIMARY }}>{item.name}</span>
+              <span className="text-xs" style={{ color: SECONDARY }}>{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs" style={{ color: ACCENT }}>{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm" style={{ color: SECONDARY }}>{item.description}</p>}
           </div>
         ))}
       </div>

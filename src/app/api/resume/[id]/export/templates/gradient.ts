@@ -7,6 +7,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
@@ -64,6 +65,14 @@ function buildGradientSectionContent(section: Section): string {
     return `<div class="flex flex-wrap gap-3">${((c as LanguagesContent).items || []).map((it: any) =>
       `<div class="flex items-center gap-2 rounded-full px-4 py-1.5" style="border:1.5px solid transparent;background-image:linear-gradient(white,white),${GRADIENT};background-origin:border-box;background-clip:padding-box,border-box"><span class="text-sm font-medium text-zinc-700">${esc(it.language)}</span><span class="text-xs text-zinc-400">${esc(it.proficiency)}</span></div>`
     ).join('')}</div>`;
+  }
+
+  if (section.type === 'github') {
+    return `<div class="space-y-3">${((c as GitHubContent).items || []).map((it: any) => `<div class="border-l-2 pl-4" style="border-image:${GRADIENT};border-image-slice:1">
+      <div class="flex items-baseline justify-between"><span class="text-sm font-semibold" style="color:${ACCENT}">${esc(it.name)}</span><span class="text-xs text-zinc-400">\u2B50 ${it.stars?.toLocaleString() ?? 0}</span></div>
+      ${it.language ? `<span class="text-xs text-zinc-500">${esc(it.language)}</span>` : ''}
+      ${it.description ? `<p class="mt-1 text-sm text-zinc-600">${esc(it.description)}</p>` : ''}
+    </div>`).join('')}</div>`;
   }
 
   if (section.type === 'custom') {

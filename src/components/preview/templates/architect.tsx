@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, GitHubContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 const PRIMARY = '#1e3a5f';
@@ -239,6 +239,31 @@ function ArchitectSectionContent({ section }: { section: any }) {
             <span className="h-1.5 w-1.5 shrink-0 rotate-45" style={{ backgroundColor: ACCENT }} />
             <span className="text-sm font-medium" style={{ color: PRIMARY }}>{item.language}</span>
             <span className="text-sm" style={{ color: MUTED }}> — {item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="border-l-2 pl-4" style={{ borderColor: ACCENT }}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color: PRIMARY }}>{item.name}</span>
+              <span
+                className="shrink-0 px-1.5 py-0.5 text-[10px] font-medium"
+                style={{ fontFamily: 'JetBrains Mono, Consolas, monospace', color: MUTED, backgroundColor: GRID }}
+              >
+                ⭐ {item.stars?.toLocaleString()}
+              </span>
+            </div>
+            {item.language && (
+              <span className="text-xs" style={{ color: ACCENT }}>{item.language}</span>
+            )}
+            {item.description && <p className="mt-1 text-sm" style={{ color: BODY_TEXT }}>{item.description}</p>}
           </div>
         ))}
       </div>

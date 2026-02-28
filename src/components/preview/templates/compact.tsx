@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent, GitHubContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 const LEFT_TYPES = new Set(['skills', 'languages', 'certifications', 'custom']);
@@ -207,6 +207,24 @@ function CompactRightContent({ section }: { section: any }) {
                 {item.highlights.map((h: string, i: number) => <li key={i} className="text-xs text-zinc-600">{h}</li>)}
               </ul>
             )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-2">
+        {items.map((item: any) => (
+          <div key={item.id}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-xs font-bold text-zinc-800">{item.name}</span>
+              <span className="text-[10px] text-zinc-400">{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-[10px] text-zinc-500">{item.language}</span>}
+            {item.description && <p className="mt-0.5 text-xs text-zinc-600">{item.description}</p>}
           </div>
         ))}
       </div>

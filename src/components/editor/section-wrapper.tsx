@@ -17,6 +17,7 @@ import { ProjectsSection } from './sections/projects';
 import { CertificationsSection } from './sections/certifications';
 import { LanguagesSection } from './sections/languages';
 import { CustomSection } from './sections/custom-section';
+import { GitHubSection } from './sections/github';
 
 interface SectionWrapperProps {
   section: ResumeSection;
@@ -33,6 +34,7 @@ const sectionComponents: Record<string, React.ComponentType<{ section: ResumeSec
   projects: ProjectsSection,
   certifications: CertificationsSection,
   languages: LanguagesSection,
+  github: GitHubSection,
   custom: CustomSection,
 };
 

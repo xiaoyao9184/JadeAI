@@ -9,6 +9,7 @@ export const SECTION_TYPES = [
   'projects',
   'certifications',
   'languages',
+  'github',
   'custom',
 ] as const;
 

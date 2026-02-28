@@ -11,6 +11,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
@@ -211,6 +212,24 @@ function RoseSectionContent({ section }: { section: any }) {
             <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: ACCENT }} />
             <span className="text-sm font-medium" style={{ color: PRIMARY }}>{item.language}</span>
             <span className="text-xs" style={{ color: ACCENT }}>{item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="rounded-xl border p-4" style={{ borderColor: ROSE_100 }}>
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-sm font-semibold" style={{ color: PRIMARY }}>{item.name}</h3>
+              <span className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium" style={{ backgroundColor: ROSE_50, color: ACCENT }}>&#11088; {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs font-medium" style={{ color: ACCENT }}>{item.language}</span>}
+            {item.description && <p className="mt-0.5 text-sm text-zinc-600">{item.description}</p>}
           </div>
         ))}
       </div>

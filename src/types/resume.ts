@@ -107,6 +107,19 @@ export interface CustomContent {
   items: CustomItem[];
 }
 
+export interface GitHubRepoItem {
+  id: string;
+  repoUrl: string;
+  name: string;
+  stars: number;
+  language: string;
+  description: string;
+}
+
+export interface GitHubContent {
+  items: GitHubRepoItem[];
+}
+
 export type SectionContent =
   | PersonalInfoContent
   | SummaryContent
@@ -116,7 +129,8 @@ export type SectionContent =
   | ProjectsContent
   | CertificationsContent
   | LanguagesContent
-  | CustomContent;
+  | CustomContent
+  | GitHubContent;
 
 export interface ResumeSection {
   id: string;

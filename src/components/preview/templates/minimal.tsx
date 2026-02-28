@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent, GitHubContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 export function MinimalTemplate({ resume }: { resume: Resume }) {
@@ -122,6 +122,24 @@ function MinimalSectionContent({ section }: { section: any }) {
                 ))}
               </ul>
             )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-4">
+        {items.map((item: any) => (
+          <div key={item.id}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-medium text-zinc-800">{item.name}</span>
+              <span className="text-xs text-zinc-400">{item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs text-zinc-400">{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm text-zinc-600">{item.description}</p>}
           </div>
         ))}
       </div>

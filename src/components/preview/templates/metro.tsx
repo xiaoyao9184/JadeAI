@@ -11,6 +11,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
@@ -214,6 +215,24 @@ function MetroSectionContent({ section }: { section: any }) {
           <div key={item.id} className="flex items-center gap-2 px-3 py-1" style={{ backgroundColor: '#f8fafc', borderLeft: `3px solid ${AMBER}` }}>
             <span className="text-sm font-semibold" style={{ color: PRIMARY }}>{item.language}</span>
             <span className="text-xs text-zinc-400">{item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="border-l-3 pl-4" style={{ borderColor: AMBER }}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color: PRIMARY }}>{item.name}</span>
+              <span className="text-xs text-zinc-400">{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs" style={{ color: AMBER }}>{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm text-zinc-600">{item.description}</p>}
           </div>
         ))}
       </div>

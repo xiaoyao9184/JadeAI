@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent, GitHubContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 const COLORS = ['#3b82f6', '#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899'];
@@ -184,6 +184,24 @@ function InfographicSectionContent({ section, colorIndex }: { section: any; colo
           <span key={item.id} className="rounded-full px-3 py-1 text-xs font-medium text-white" style={{ background: COLORS[(colorIndex + i) % COLORS.length] }}>
             {item.language} — {item.proficiency}
           </span>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="rounded-lg border border-zinc-100 p-4">
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color }}>{item.name}</span>
+              <span className="shrink-0 text-xs text-zinc-400">{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs" style={{ color }}>{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm text-zinc-600">{item.description}</p>}
+          </div>
         ))}
       </div>
     );

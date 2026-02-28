@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
             content = { fullName: '', jobTitle: '', email: '', phone: '', location: '' };
           } else if (s.type === 'summary') {
             content = { text: '' };
-          } else if (s.type === 'work_experience' || s.type === 'education' || s.type === 'projects' || s.type === 'certifications' || s.type === 'languages' || s.type === 'custom') {
+          } else if (s.type === 'work_experience' || s.type === 'education' || s.type === 'projects' || s.type === 'certifications' || s.type === 'languages' || s.type === 'github' || s.type === 'custom') {
             content = { items: [] };
           } else if (s.type === 'skills') {
             content = { categories: [] };

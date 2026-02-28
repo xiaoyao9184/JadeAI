@@ -11,6 +11,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
@@ -190,6 +191,24 @@ function SwissSectionContent({ section }: { section: any }) {
           <div key={item.id} className="text-sm">
             <span className="font-bold" style={{ color: TEXT }}>{item.language}</span>
             <span style={{ color: '#71717a' }}> &mdash; {item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="grid grid-cols-[140px_1fr] gap-4">
+            <span className="text-xs" style={{ color: '#71717a' }}>&#11088; {item.stars?.toLocaleString()}</span>
+            <div>
+              <h3 className="text-sm font-bold" style={{ color: TEXT }}>{item.name}</h3>
+              {item.language && <span className="text-xs" style={{ color: RED }}>{item.language}</span>}
+              {item.description && <p className="mt-0.5 text-sm" style={{ color: '#3f3f46' }}>{item.description}</p>}
+            </div>
           </div>
         ))}
       </div>

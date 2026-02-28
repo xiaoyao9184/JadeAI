@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, GitHubContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 const GOLD = '#d4af37';
@@ -165,6 +165,24 @@ function ElegantSectionContent({ section }: { section: any }) {
             <span className="font-semibold" style={{ color: GOLD }}>{item.language}</span>
             <span className="text-zinc-500"> — {item.proficiency}</span>
           </span>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-4">
+        {items.map((item: any) => (
+          <div key={item.id}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color: '#2c2c2c' }}>{item.name}</span>
+              <span className="text-xs italic text-zinc-400">{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs text-zinc-400 italic">{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm text-zinc-600">{item.description}</p>}
+          </div>
         ))}
       </div>
     );

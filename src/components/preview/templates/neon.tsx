@@ -11,6 +11,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
@@ -241,6 +242,24 @@ function NeonSectionContent({ section }: { section: any }) {
             <span className="h-2 w-2 rounded-full" style={{ backgroundColor: CYAN, boxShadow: `0 0 6px ${CYAN}` }} />
             <span className="text-sm font-medium" style={{ color: CYAN }}>{item.language}</span>
             <span className="text-xs" style={{ color: TEXT_DIM }}>{item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="rounded-lg p-4" style={{ border: `1px solid ${CYAN}20`, backgroundColor: `${CYAN}05` }}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color: CYAN }}>{item.name}</span>
+              <span className="text-xs" style={{ color: TEXT_DIM }}>{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs" style={{ color: VIOLET }}>{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm" style={{ color: TEXT }}>{item.description}</p>}
           </div>
         ))}
       </div>

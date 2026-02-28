@@ -17,6 +17,7 @@ export function createExecutableTools(resumeId: string, aiConfig: AIConfig) {
 - projects: { items: [{ id, name, url, description, technologies, highlights }] }
 - certifications: { items: [{ id, name, issuer, date, url }] }
 - languages: { items: [{ id, language, proficiency }] }
+- github: { items: [{ id, repoUrl, name, stars, language, description }] } — repoUrl/name/stars/language are READ-ONLY (auto-fetched from GitHub API), only modify description
 - custom: { items: [{ id, title, subtitle, date, description }] }
 Use field="items" or field="categories" to update list sections. Each item MUST include a unique "id" (use a UUID).`,
       inputSchema: z.object({
@@ -39,7 +40,7 @@ Use field="items" or field="categories" to update list sections. Each item MUST 
         }
 
         // Fix field name for item-based sections when AI uses wrong field
-        const itemSections = ['work_experience', 'education', 'projects', 'certifications', 'languages', 'custom'];
+        const itemSections = ['work_experience', 'education', 'projects', 'certifications', 'languages', 'github', 'custom'];
         let actualField = field;
         if (itemSections.includes(section.type) && field !== 'items') {
           // AI sent wrong field (e.g. "text") for an items-based section — convert to items
@@ -65,6 +66,35 @@ Use field="items" or field="categories" to update list sections. Each item MUST 
               ? { ...item, id: crypto.randomUUID() }
               : item
           );
+        }
+
+        // GitHub sections: protect read-only fields for existing items, auto-fetch for new items
+        if (section.type === 'github' && actualField === 'items' && Array.isArray(parsedValue)) {
+          const existingItems = ((section.content as any)?.items || []) as any[];
+          const readonlyMap = new Map(existingItems.map((it: any) => [it.id, { stars: it.stars, name: it.name, repoUrl: it.repoUrl, language: it.language }]));
+          parsedValue = await Promise.all((parsedValue as any[]).map(async (item: any) => {
+            // Existing item: restore read-only fields
+            if (item.id && readonlyMap.has(item.id)) {
+              return { ...item, ...readonlyMap.get(item.id) };
+            }
+            // New item with repoUrl: fetch real data from GitHub API
+            if (item.repoUrl && /github\.com\/[^/]+\/[^/]+/.test(item.repoUrl)) {
+              try {
+                const match = item.repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
+                if (match) {
+                  const repoName = match[2].replace(/\.git$/, '');
+                  const ghRes = await fetch(`https://api.github.com/repos/${match[1]}/${repoName}`, {
+                    headers: { Accept: 'application/vnd.github.v3+json' },
+                  });
+                  if (ghRes.ok) {
+                    const gh = await ghRes.json();
+                    return { ...item, name: gh.full_name, stars: gh.stargazers_count, language: gh.language || '', description: item.description || gh.description || '' };
+                  }
+                }
+              } catch { /* fallback to AI-provided data */ }
+            }
+            return item;
+          }));
         }
 
         const updatedContent = { ...(section.content as Record<string, unknown>), [actualField]: parsedValue };

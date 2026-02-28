@@ -11,6 +11,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
@@ -185,6 +186,24 @@ function RibbonSectionContent({ section }: { section: any }) {
                 ))}
               </ul>
             )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="border-l-2 pl-3" style={{ borderColor: RIBBON }}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-semibold" style={{ color: ACCENT }}>{item.name}</span>
+              <span className="shrink-0 text-xs text-zinc-400">⭐ {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs text-zinc-400">{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm text-zinc-600">{item.description}</p>}
           </div>
         ))}
       </div>

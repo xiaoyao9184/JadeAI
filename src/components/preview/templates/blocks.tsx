@@ -11,6 +11,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
@@ -193,6 +194,24 @@ function BlocksSectionContent({ section }: { section: any }) {
                 ))}
               </ul>
             )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id} className="rounded-md border p-3" style={{ borderColor: '#e3e2de' }}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-semibold" style={{ color: ACCENT }}>{item.name}</span>
+              <span className="text-xs" style={{ color: '#9b9a97' }}>⭐ {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs" style={{ color: '#9b9a97' }}>{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm" style={{ color: '#787774' }}>{item.description}</p>}
           </div>
         ))}
       </div>

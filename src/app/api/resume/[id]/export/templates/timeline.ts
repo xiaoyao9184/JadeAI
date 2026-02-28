@@ -1,3 +1,4 @@
+import type { GitHubContent } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 function buildTimelineSectionContent(s: Section): string {
@@ -47,6 +48,15 @@ function buildTimelineSectionContent(s: Section): string {
       ${it.description ? `<p class="mt-1 text-sm text-zinc-600">${esc(it.description)}</p>` : ''}
       ${it.technologies?.length ? `<div class="mt-1 flex flex-wrap gap-1">${it.technologies.map((t: string) => `<span class="rounded-full px-2 py-0.5 text-[10px] font-medium" style="background:#eff6ff;color:${AC}">${esc(t)}</span>`).join('')}</div>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1 list-disc pl-4">${buildHighlights(it.highlights, 'text-sm text-zinc-600')}</ul>` : ''}
+    </div>`).join('')}</div>`;
+  }
+
+  if (s.type === 'github') {
+    return `<div class="relative border-l-2 pl-6 ml-2" style="border-color:#e2e8f0">${((c as GitHubContent).items || []).map((it: any, idx: number, arr: any[]) => `<div class="relative${idx < arr.length - 1 ? ' pb-5' : ''}">
+      <div class="absolute -left-[31px] top-1 h-4 w-4 rounded-full border-2 bg-white" style="border-color:${AC}"></div>
+      <div class="flex items-baseline justify-between"><span class="text-sm font-bold" style="color:${BG}">${esc(it.name)}</span><span class="shrink-0 text-xs text-zinc-400">⭐ ${it.stars?.toLocaleString() ?? 0}</span></div>
+      ${it.language ? `<span class="text-xs" style="color:${AC}">${esc(it.language)}</span>` : ''}
+      ${it.description ? `<p class="mt-1 text-sm text-zinc-600">${esc(it.description)}</p>` : ''}
     </div>`).join('')}</div>`;
   }
 

@@ -143,6 +143,7 @@
       "projects": "项目经历",
       "certifications": "资格证书",
       "languages": "语言能力",
+      "github": "GitHub 项目",
       "custom": "自定义模块"
     },
     "fields": {
@@ -168,6 +169,12 @@
       "technologies": "技术栈",
       "language": "语言",
       "proficiency": "熟练程度",
+      "repoUrl": "仓库地址",
+      "stars": "Stars",
+      "repoName": "仓库名称",
+      "primaryLanguage": "主要语言",
+      "fetchRepo": "获取仓库信息",
+      "fetchingRepo": "获取中...",
       "addItem": "添加条目",
       "removeItem": "删除条目",
       "clear": "清除",

@@ -7,6 +7,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
@@ -71,6 +72,17 @@ function buildJapaneseSectionContent(section: Section): string {
     return `<div class="flex flex-wrap gap-x-8 gap-y-2">${((c as LanguagesContent).items || []).map((it: any) =>
       `<div class="text-sm"><span class="font-normal" style="color:${PRIMARY}">${esc(it.language)}</span><span class="font-light" style="color:${ACCENT}"> &mdash; ${esc(it.proficiency)}</span></div>`
     ).join('')}</div>`;
+  }
+
+  if (section.type === 'github') {
+    return `<div class="space-y-5">${((c as GitHubContent).items || []).map((it: any) => `<div>
+      <div class="flex items-baseline justify-between">
+        <h3 class="text-sm font-normal" style="color:${PRIMARY}">${esc(it.name)}</h3>
+        <span class="shrink-0 text-[10px] font-light" style="color:${ACCENT}">&#11088; ${it.stars?.toLocaleString() ?? 0}</span>
+      </div>
+      ${it.language ? `<p class="mt-0.5 text-xs font-light" style="color:${ACCENT}">${esc(it.language)}</p>` : ''}
+      ${it.description ? `<p class="mt-1 text-sm font-light leading-relaxed" style="color:#57534e">${esc(it.description)}</p>` : ''}
+    </div>`).join('')}</div>`;
   }
 
   if (section.type === 'custom') {

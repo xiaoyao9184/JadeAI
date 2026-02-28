@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent, GitHubContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 const NAVY = '#0f172a';
@@ -172,6 +172,24 @@ function CorporateSectionContent({ section }: { section: any }) {
           <div key={item.id}>
             <span className="text-sm font-bold" style={{ color: NAVY }}>{item.language}</span>
             <span className="text-sm text-slate-600"> — {item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = ((content as GitHubContent).items || []);
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color: NAVY }}>{item.name}</span>
+              <span className="text-xs text-slate-400">⭐ {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs text-slate-400">{item.language}</span>}
+            {item.description && <p className="mt-1 text-sm text-slate-600">{item.description}</p>}
           </div>
         ))}
       </div>

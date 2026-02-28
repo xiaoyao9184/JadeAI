@@ -10,6 +10,7 @@ import type {
   ProjectsContent,
   CertificationsContent,
   LanguagesContent,
+  GitHubContent,
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
@@ -183,6 +184,24 @@ function AtsSectionContent({ section }: { section: any }) {
           </span>
         ))}
       </p>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold text-black">{item.name}</span>
+              <span className="text-xs text-zinc-600">{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs text-zinc-600">{item.language}</span>}
+            {item.description && <p className="mt-0.5 text-sm text-zinc-700">{item.description}</p>}
+          </div>
+        ))}
+      </div>
     );
   }
 

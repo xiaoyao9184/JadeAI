@@ -7,6 +7,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
@@ -54,6 +55,13 @@ function buildInfographicSectionContent(section: Section, color: string, colorIn
     return `<div class="flex flex-wrap gap-2">${((c as LanguagesContent).items || []).map((it: any, i: number) =>
       `<span class="rounded-full px-3 py-1 text-xs font-medium text-white" style="background:${COLORS[(colorIndex + i) % COLORS.length]}">${esc(it.language)} — ${esc(it.proficiency)}</span>`
     ).join('')}</div>`;
+  }
+  if (section.type === 'github') {
+    return `<div class="space-y-3">${((c as GitHubContent).items || []).map((it: any) => `<div class="rounded-lg border border-zinc-100 p-4">
+      <div class="flex items-baseline justify-between"><span class="text-sm font-bold" style="color:${color}">${esc(it.name)}</span><span class="shrink-0 text-xs text-zinc-400">\u2B50 ${it.stars?.toLocaleString() ?? 0}</span></div>
+      ${it.language ? `<span class="text-xs" style="color:${color}">${esc(it.language)}</span>` : ''}
+      ${it.description ? `<p class="mt-1 text-sm text-zinc-600">${esc(it.description)}</p>` : ''}
+    </div>`).join('')}</div>`;
   }
   if (section.type === 'custom') {
     return `<div class="space-y-3">${((c as CustomContent).items || []).map((it: any) => `<div class="rounded-lg border border-zinc-100 p-4">

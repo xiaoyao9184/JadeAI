@@ -7,6 +7,7 @@ import type {
   CertificationsContent,
   LanguagesContent,
   CustomContent,
+  GitHubContent,
 } from '@/types/resume';
 import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
@@ -70,6 +71,14 @@ function buildNeonSectionContent(section: Section): string {
     return `<div class="flex flex-wrap gap-3">${((c as LanguagesContent).items || []).map((it: any) =>
       `<div class="flex items-center gap-2 rounded-full px-4 py-1.5" style="border:1px solid ${CYAN}30"><span class="h-2 w-2 rounded-full" style="background-color:${CYAN};box-shadow:0 0 6px ${CYAN}"></span><span class="text-sm font-medium" style="color:${CYAN}">${esc(it.language)}</span><span class="text-xs" style="color:${TEXT_DIM}">${esc(it.proficiency)}</span></div>`
     ).join('')}</div>`;
+  }
+
+  if (section.type === 'github') {
+    return `<div class="space-y-3">${((c as GitHubContent).items || []).map((it: any) => `<div class="rounded-lg p-4" style="border:1px solid ${CYAN}20;background-color:${CYAN}05">
+      <div class="flex items-baseline justify-between"><span class="text-sm font-bold" style="color:${CYAN}">${esc(it.name)}</span><span class="text-xs" style="color:${TEXT_DIM}">\u2B50 ${it.stars?.toLocaleString() ?? 0}</span></div>
+      ${it.language ? `<span class="text-xs" style="color:${VIOLET}">${esc(it.language)}</span>` : ''}
+      ${it.description ? `<p class="mt-1 text-sm" style="color:${TEXT}">${esc(it.description)}</p>` : ''}
+    </div>`).join('')}</div>`;
   }
 
   if (section.type === 'custom') {

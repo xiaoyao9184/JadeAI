@@ -1,6 +1,6 @@
 'use client';
 
-import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
+import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent, GitHubContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
 
 const DARK_GREEN = '#004d40';
@@ -168,6 +168,24 @@ function FormalSectionContent({ section }: { section: any }) {
           <div key={item.id} className="flex text-sm">
             <span className="w-32 shrink-0 font-semibold" style={{ color: DARK_GREEN }}>{item.language}:</span>
             <span className="text-zinc-600">{item.proficiency}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.type === 'github') {
+    const items = (content as GitHubContent).items || [];
+    return (
+      <div className="space-y-3">
+        {items.map((item: any) => (
+          <div key={item.id}>
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-bold" style={{ color: DARK_GREEN }}>{item.name}</span>
+              <span className="shrink-0 text-xs italic text-zinc-400">{'\u2B50'} {item.stars?.toLocaleString()}</span>
+            </div>
+            {item.language && <span className="text-xs text-zinc-500">{item.language}</span>}
+            {item.description && <p className="mt-0.5 text-sm text-zinc-600">{item.description}</p>}
           </div>
         ))}
       </div>
