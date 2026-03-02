@@ -29,7 +29,7 @@ const TEMPLATES_TOUR_STEPS: TourStepConfig[] = [
 const MOCK_DATE = new Date('2025-01-01T00:00:00Z');
 
 function buildMockResume(template: string): Resume {
-  return {
+  return ({
     id: 'mock',
     userId: 'mock',
     title: 'Sample Resume',
@@ -219,7 +219,7 @@ function buildMockResume(template: string): Resume {
     ],
     createdAt: MOCK_DATE,
     updatedAt: MOCK_DATE,
-  };
+  }) as Resume;
 }
 
 export default function TemplatesPage() {
