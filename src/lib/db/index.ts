@@ -8,6 +8,12 @@ let adapter: DatabaseAdapter;
 if (config.db.type === 'postgresql') {
   adapter = new PostgreSQLAdapter(process.env.DATABASE_URL!);
 } else {
+  if (process.env.VERCEL) {
+    throw new Error(
+      'SQLite is not supported on Vercel (read-only filesystem). ' +
+      'Please set DB_TYPE=postgresql and DATABASE_URL in your Vercel environment variables.',
+    );
+  }
   adapter = new SQLiteAdapter(process.env.SQLITE_PATH || './data/jade.db');
 }
 
